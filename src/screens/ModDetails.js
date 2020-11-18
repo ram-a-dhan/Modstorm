@@ -8,17 +8,16 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-export default function Mods() {
+export default function ModDetails() {
   const { navigate } = useNavigation();
 
   return (
     <SafeAreaView style={[styles.center, styles.white]}>
       <View style={styles.center}>
-        <Text>Mods Screen</Text>
-        <View></View>
+        <Text>Mod Details Screen</Text>
         <Button
-          title="Go to Details"
-          onPress={() => navigate('ModDetails')}
+          title="Go to Mods"
+          onPress={() => navigate('Mods')}
         />
         <Button
           title="Go to Search"
