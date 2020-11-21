@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import {
-  SafeAreaView,
   View,
+  Image,
   Text,
   StyleSheet,
 } from 'react-native';
@@ -14,11 +14,16 @@ export default function Splash({ route }) {
   }, []);
 
   return (
-    <SafeAreaView style={[styles.center, styles.white]}>
-      <View style={styles.center}>
-        <Text>Splash Screen</Text>
+    <View style={[styles.center, styles.background]}>
+      <View style={styles.logotype}>
+        <Image
+          source={require('../assets/images/modstorm-logo-small.png')}
+          style={styles.logo}
+        />
+        <Text style={styles.type1}>MOD</Text>
+        <Text style={styles.type2}>STORM</Text>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -28,7 +33,31 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  white: {
+  background: {
     backgroundColor: 'white',
+    // backgroundColor: '#181818',
+  },
+  logotype: {
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 15,
+  },
+  logo: {
+    width: 75,
+    height: 75,
+  },
+  type1: {
+    fontFamily: 'BarlowCondensed-Regular',
+    fontSize: 40,
+    margin: 0,
+    marginLeft: 15,
+    // color: 'white',
+  },
+  type2: {
+    fontFamily: 'BarlowCondensed-Bold',
+    fontSize: 40,
+    // color: '#57a5cc',
   },
 });
