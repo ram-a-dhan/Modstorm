@@ -40,6 +40,7 @@ function AppTabScreen() {
           }
         },
       })}
+      // initialRouteName="Mods"
       tabBarOptions={{
         // activeTintColor: 'dodgerblue',
         // inactiveTintColor: 'grey',
@@ -58,7 +59,7 @@ function AppTabScreen() {
       <AppTab.Screen
         name="Mods"
         component={ModStackScreen}
-        options={{ /* unmountOnBlur: true */ }}
+        options={{ unmountOnBlur: true }}
       />
     </AppTab.Navigator>
   );

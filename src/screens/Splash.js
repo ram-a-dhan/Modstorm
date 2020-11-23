@@ -1,27 +1,37 @@
 import React, { useEffect } from 'react';
 import {
   View,
-  Image,
   Text,
   StyleSheet,
+  useWindowDimensions,
 } from 'react-native';
+import * as Animatable from 'react-native-animatable';
 
 export default function Splash({ route }) {
+  const { width } = useWindowDimensions();
+
   useEffect(() => {
     setTimeout(() => {
       route.params.setShowSplashScreen(false);
-    }, 1500);
+    }, 3000);
   }, []);
 
   return (
-    <View style={[styles.center, styles.background]}>
-      <View style={styles.logotype}>
-        <Image
-          source={require('../assets/images/modstorm-logo-small.png')}
-          style={styles.logo}
-        />
-        <Text style={styles.type1}>MOD</Text>
-        <Text style={styles.type2}>STORM</Text>
+    <View style={[styles.center, styles.background, { width }]}>
+      <View style={styles.flexRow}>
+        <Animatable.View animation="fadeIn" delay={500}>
+          <Animatable.Image
+            animation="rotate"
+            direction="reverse"
+            iterationCount="infinite"
+            source={require('../assets/images/modstorm-logo.png')}
+            style={styles.logo}
+          />
+        </Animatable.View>
+        <Animatable.View animation="fadeInRight" style={styles.flexRow}>
+          <Text style={styles.type1}>MOD</Text>
+          <Text style={styles.type2}>STORM</Text>
+        </Animatable.View>
       </View>
     </View>
   );
@@ -34,22 +44,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   background: {
-    backgroundColor: 'white',
     // backgroundColor: '#181818',
   },
-  logotype: {
+  flexRow: {
     flexDirection: 'row',
     flexWrap: 'nowrap',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 15,
   },
   logo: {
     width: 75,
     height: 75,
   },
   type1: {
-    fontFamily: 'BarlowCondensed-Regular',
+    fontFamily: 'BarlowCondensed-Light',
     fontSize: 40,
     margin: 0,
     marginLeft: 15,
