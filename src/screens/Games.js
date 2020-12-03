@@ -5,6 +5,7 @@ import {
   StyleSheet,
   useWindowDimensions,
   Image,
+  ScrollView,
   ImageBackground,
   TextInput,
 } from 'react-native';
@@ -15,11 +16,16 @@ export default function Games() {
   const { height } = useWindowDimensions();
 
   return (
-    <View style={[styles.center, { /* backgroundColor: '#383838' */ }]}>
+    <ScrollView stickyHeaderIndices={[1]}>
       <ImageBackground
         source={{ uri: `https://staticdelivery.nexusmods.com/Images/games/4_3/tile_${110}.jpg` }}
-        style={{ width: '100%', height: (height * 0.5) - 50 }}
-      />
+        style={{ width: '100%', height: (height / 2) - 50, justifyContent: 'flex-end', alignItems: 'center' }}
+      >
+        <View style={{ margin: 25 }}>
+          <Text style={{ fontFamily: 'BarlowCondensed-Regular', fontSize: 20, textAlign: 'center', color: 'white' }}>Selected Game:</Text>
+          <Text style={{ fontFamily: 'BarlowCondensed-Medium', fontSize: 40, textAlign: 'center', color: 'white' }}>SKYRIM</Text>
+        </View>
+      </ImageBackground>
       <View style={{ backgroundColor: 'black', width: '100%', height: 50 }}>
         <TextInput placeholder="Search Game" style={{ textAlign: 'center', color: 'white', fontSize: 18 }} placeholderTextColor="darkgrey" />
       </View>
@@ -42,7 +48,7 @@ export default function Games() {
         spacing={25}
         itemContainerStyle={{ justifyContent: 'center', alignItems: 'center' }}
       />
-    </View>
+    </ScrollView>
   );
 }
 
