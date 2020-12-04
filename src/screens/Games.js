@@ -16,6 +16,7 @@ import {
 import {
   TouchableOpacity,
 } from 'react-native-gesture-handler';
+import MCIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import listOfGames from '../assets/listOfGames';
 
 LogBox.ignoreLogs([
@@ -38,7 +39,7 @@ export default function Games() {
     <ScrollView stickyHeaderIndices={[1]}>
       <ImageBackground
         source={{ uri: `https://staticdelivery.nexusmods.com/Images/games/4_3/tile_${110}.jpg` }}
-        style={{ width: '100%', height: (height / 2) - 50, justifyContent: 'flex-end', alignItems: 'center' }}
+        style={{ width: '100%', height: (height * 0.5) - 50, justifyContent: 'flex-end', alignItems: 'center' }}
       >
         <View style={{ margin: 25 }}>
           <Text style={{ fontFamily: 'BarlowCondensed-Regular', fontSize: 20, textAlign: 'center', color: 'white' }}>Selected Game:</Text>
@@ -62,15 +63,25 @@ export default function Games() {
             source={{ uri: `https://staticdelivery.nexusmods.com/Images/games/4_3/tile_${item.id}.jpg` }}
             style={{ width: width / numColumns, aspectRatio: 0.8, justifyContent: 'flex-end' }}
           >
-            <View style={{ padding: 10 }}>
+            <View style={{ padding: 10, backgroundColor: '#00000080' }}>
               <Text style={{ fontFamily: 'BarlowCondensed-Medium', fontSize: 15, color: 'white', marginBottom: 5 }}>
                 {item.name}
               </Text>
-              <TouchableOpacity style={{ width: '100%', height: 20, backgroundColor: '#80808080', justifyContent: 'center', alignItems: 'center' }}>
+              <TouchableOpacity style={{ width: '100%', height: 20, backgroundColor: '#80808080', justifyContent: 'center', alignItems: 'center', marginBottom: 5 }}>
                 <Text style={{ fontFamily: 'BarlowCondensed-Regular', fontSize: 15, color: 'white' }}>
-                  Select
+                  SELECT
                 </Text>
               </TouchableOpacity>
+              <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
+                <MCIcons name="cube-outline" size={15} color="white" />
+                <Text style={{ fontFamily: 'BarlowCondensed-Regular', fontSize: 12, color: 'white', marginHorizontal: 3 }}>
+                  {item.mods}
+                </Text>
+                <MCIcons name="arrow-down-circle-outline" size={15} color="white" />
+                <Text style={{ fontFamily: 'BarlowCondensed-Regular', fontSize: 12, color: 'white', marginHorizontal: 3 }}>
+                  {item.downloads}
+                </Text>
+              </View>
             </View>
           </ImageBackground>
         )}
