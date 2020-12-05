@@ -8,10 +8,10 @@ import {
   FlatList,
   LogBox,
 } from 'react-native';
+import GameBanner from '../components/GameBanner';
+import SearchBar from '../components/SearchBar';
 import GameCard from '../components/GameCard';
 import listOfGames from '../assets/listOfGames';
-import SearchBar from '../components/SearchBar';
-import GameBanner from '../components/GameBanner';
 
 LogBox.ignoreLogs([/VirtualizedLists/]);
 
@@ -38,8 +38,8 @@ export default function Games() {
       <SearchBar searchBarHeight={50} />
       <FlatList
         ListHeaderComponent={() => (
-          <View style={{ width: '100%', height: 50, marginBottom: 5, paddingHorizontal: 25, justifyContent: 'center' }}>
-            <Text style={{ fontFamily: 'BarlowCondensed-Medium', fontSize: 28 }}>
+          <View style={styles.allGamesTitleView}>
+            <Text style={styles.allGamesTitleText}>
               All Games
             </Text>
           </View>
@@ -61,5 +61,15 @@ export default function Games() {
 }
 
 const styles = StyleSheet.create({
-  
+  allGamesTitleView: {
+    width: '100%',
+    height: 50,
+    justifyContent: 'center',
+    paddingHorizontal: 25,
+    marginBottom: 5,
+  },
+  allGamesTitleText: {
+    fontFamily: 'BarlowCondensed-Medium',
+    fontSize: 28,
+  },
 });
