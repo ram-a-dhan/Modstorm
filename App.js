@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StatusBar } from 'react-native';
+import { KeyboardAvoidingView, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -42,11 +42,12 @@ function AppTabScreen() {
       })}
       // initialRouteName="Mods"
       tabBarOptions={{
-        // activeTintColor: 'dodgerblue',
+        // activeTintColor: '#57a5cc',
         // inactiveTintColor: 'grey',
         keyboardHidesTabBar: true,
         style: {
           borderTopWidth: 0,
+          height: 50,
         },
         labelStyle: {
           fontFamily: 'BarlowCondensed-Regular',
@@ -71,7 +72,7 @@ export default function App() {
   const [showSplashScreen, setShowSplashScreen] = useState(true);
 
   return (
-    <>
+    <KeyboardAvoidingView style={{ flex: 1 }}>
       <StatusBar
         // translucent
         backgroundColor="black"
@@ -89,6 +90,6 @@ export default function App() {
           }
         </InitStack.Navigator>
       </NavigationContainer>
-    </>
+    </KeyboardAvoidingView>
   );
 }
