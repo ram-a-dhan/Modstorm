@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
   },
   selectButton: {
     width: '100%',
-    height: 20,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 5,

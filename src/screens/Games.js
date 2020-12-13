@@ -4,16 +4,14 @@ import {
   Text,
   StyleSheet,
   useWindowDimensions,
-  ScrollView,
-  FlatList,
-  LogBox,
+  SectionList,
 } from 'react-native';
 import GameBanner from '../components/GameBanner';
 import SearchBar from '../components/SearchBar';
 import GameCard from '../components/GameCard';
 import listOfGames from '../assets/listOfGames';
-
-LogBox.ignoreLogs([/VirtualizedLists/]);
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import MCIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function Games() {
   const { width, height } = useWindowDimensions();
@@ -21,42 +19,71 @@ export default function Games() {
   const [numColumns, setNumColumns] = useState(3);
 
   useEffect(() => {
-    if (width > height) {
-      setNumColumns(5);
-    } else {
-      setNumColumns(3);
+    setNumColumns(Math.round(width / 150));
+  }, [width, height]);
+
+  const renderGameCards = ({ section, index }) => {
+    if (index % numColumns !== 0) return null;
+
+    const items = [];
+
+    for (let i = index; i < index + numColumns; i++) {
+      if (i >= section.data.length) {
+        break;
+      }
+      items.push(
+        <GameCard
+          key={section.data[i].id.toString()}
+          game={section.data[i]}
+          width={width}
+          numColumns={numColumns}
+        />
+      );
     }
-  }, [width, height])
+
+    return (
+      <View style={{ flexDirection: 'row' }}>
+        {items}
+      </View>
+    );
+  };
 
   return (
-    <ScrollView stickyHeaderIndices={[1]}>
-      <GameBanner
-        selectedGame={listOfGames[0]}
-        height={height}
-        searchBarHeight={50}
-      />
-      <SearchBar searchBarHeight={50} />
-      <FlatList
-        ListHeaderComponent={() => (
+    <SectionList
+      ListHeaderComponent={() => (
+        <GameBanner
+          selectedGame={listOfGames[0]}
+          height={height}
+          searchBarHeight={0}
+        />
+      )}
+      renderSectionHeader={() => (
+        <>
+          {/* <SearchBar searchBarHeight={50} /> */}
           <View style={styles.allGamesTitleView}>
             <Text style={styles.allGamesTitleText}>
               All Games
             </Text>
+            <View style={styles.sortButtonGroup}>
+              <TouchableOpacity>
+                <MCIcons name="package-variant-closed" size={25} color="black" />
+              </TouchableOpacity>
+              <View style={{ width: 10 }} />
+              <TouchableOpacity>
+                <MCIcons name="sort-variant" size={25} color="black" />
+              </TouchableOpacity>
+            </View>
           </View>
-        )}
-        data={listOfGames}
-        keyExtractor={item => item.id.toString()}
-        renderItem={({ item }) => (
-          <GameCard
-            game={item}
-            width={width}
-            numColumns={numColumns}
-          />
-        )}
-        numColumns={numColumns}
-        key={numColumns}
-      />
-    </ScrollView>
+        </>
+      )}
+      stickySectionHeadersEnabled
+      sections={[{ data: listOfGames }]}
+      keyExtractor={item => item.id.toString()}
+      renderItem={renderGameCards}
+      ListFooterComponent={() => (
+        <View style={{ width: '100%', height: (width / numColumns) / 0.8 }} />
+      )}
+    />
   );
 }
 
@@ -64,12 +91,22 @@ const styles = StyleSheet.create({
   allGamesTitleView: {
     width: '100%',
     height: 50,
-    justifyContent: 'center',
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     paddingHorizontal: 25,
-    marginBottom: 5,
+    backgroundColor: 'white',
   },
   allGamesTitleText: {
     fontFamily: 'BarlowCondensed-Medium',
-    fontSize: 28,
+    fontSize: 25,
+    margin: 0,
+    padding: 0,
+  },
+  sortButtonGroup: {
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+    alignItems: 'center',
   },
 });
