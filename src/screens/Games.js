@@ -22,6 +22,26 @@ export default function Games() {
     setNumColumns(Math.round(width / 150));
   }, [width, height]);
 
+  const renderStickyHeader = () => (
+    <>
+      {/* <SearchBar searchBarHeight={50} /> */}
+      <View style={styles.allGamesTitleView}>
+        <Text style={styles.allGamesTitleText}>
+          All Games
+        </Text>
+        <View style={styles.sortButtonGroup}>
+          <TouchableOpacity>
+            <MCIcons name="package-variant-closed" size={25} color="black" />
+          </TouchableOpacity>
+          <View style={{ width: 10 }} />
+          <TouchableOpacity>
+            <MCIcons name="sort-variant" size={25} color="black" />
+          </TouchableOpacity>
+        </View>
+      </View>
+    </>
+  );
+
   const renderGameCards = ({ section, index }) => {
     if (index % numColumns !== 0) return null;
 
@@ -49,41 +69,26 @@ export default function Games() {
   };
 
   return (
-    <SectionList
-      ListHeaderComponent={() => (
-        <GameBanner
-          selectedGame={listOfGames[0]}
-          height={height}
-          searchBarHeight={0}
-        />
-      )}
-      renderSectionHeader={() => (
-        <>
-          {/* <SearchBar searchBarHeight={50} /> */}
-          <View style={styles.allGamesTitleView}>
-            <Text style={styles.allGamesTitleText}>
-              All Games
-            </Text>
-            <View style={styles.sortButtonGroup}>
-              <TouchableOpacity>
-                <MCIcons name="package-variant-closed" size={25} color="black" />
-              </TouchableOpacity>
-              <View style={{ width: 10 }} />
-              <TouchableOpacity>
-                <MCIcons name="sort-variant" size={25} color="black" />
-              </TouchableOpacity>
-            </View>
-          </View>
-        </>
-      )}
-      stickySectionHeadersEnabled
-      sections={[{ data: listOfGames }]}
-      keyExtractor={item => item.id.toString()}
-      renderItem={renderGameCards}
-      ListFooterComponent={() => (
-        <View style={{ width: '100%', height: (width / numColumns) / 0.8 }} />
-      )}
-    />
+    <>
+      <SectionList
+        ListHeaderComponent={() => (
+          <GameBanner
+            selectedGame={listOfGames[0]}
+            height={height}
+            searchBarHeight={0}
+          />
+        )}
+        renderSectionHeader={renderStickyHeader}
+        stickySectionHeadersEnabled
+        sections={[{ data: listOfGames }]}
+        keyExtractor={item => item.id.toString()}
+        renderItem={renderGameCards}
+        ListFooterComponent={() => (
+          <View style={{ width: '100%', height: (width / numColumns) / 0.8 }} />
+        )}
+      />
+      {/* <SearchBar searchBarHeight={50} /> */}
+    </>
   );
 }
 
