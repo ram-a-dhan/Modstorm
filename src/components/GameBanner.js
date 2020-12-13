@@ -6,11 +6,11 @@ import {
   ImageBackground,
 } from 'react-native';
 
-export default function GameBanner({ selectedGame, height, searchBarHeight }) {
+export default function GameBanner({ selectedGame, height }) {
   return (
     <ImageBackground
       source={{ uri: `https://staticdelivery.nexusmods.com/Images/games/4_3/tile_${selectedGame.id}.jpg` }}
-      style={[styles.gameBannerBg, { height: (height * 0.5) - searchBarHeight }]}
+      style={[styles.gameBannerBg, { height: height * 0.5 }]}
     >
       <View style={styles.gameBannerView}>
         <Text style={styles.gameBannerTopText}>Selected Game:</Text>

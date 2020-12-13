@@ -5,13 +5,14 @@ import {
   StyleSheet,
 } from 'react-native';
 
-export default function SearchBar({ searchBarHeight }) {
+export default function SearchBar({ scrollToHeader }) {
   return (
-    <View style={[styles.searchBarView, { height: searchBarHeight }]}>
+    <View style={styles.searchBarView}>
       <TextInput
         style={styles.searchBarInput}
         placeholder="Search Game"
         placeholderTextColor="darkgrey"
+        onFocus={scrollToHeader}
       />
     </View>
   );
@@ -19,7 +20,8 @@ export default function SearchBar({ searchBarHeight }) {
 
 const styles = StyleSheet.create({
   searchBarView: {
-    width: '100%', 
+    width: '100%',
+    height: 50,
     backgroundColor: 'black',
   },
   searchBarInput: {
