@@ -7,7 +7,9 @@ import {
   SectionList,
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import FAB from 'react-native-fab';
 import MCIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import ADIcons from 'react-native-vector-icons/AntDesign';
 import GameBanner from '../components/GameBanner';
 import GameCard from '../components/GameCard';
 import SearchBar from '../components/SearchBar';
@@ -18,6 +20,7 @@ export default function Games() {
   
   const [numColumns, setNumColumns] = useState(3);
   const [showSearchBar, setShowSearchBar] = useState(false);
+  const [showFAB, setShowFAB] = useState(true);
   const sectionRef = useRef(null);
 
   useEffect(() => {
@@ -25,16 +28,15 @@ export default function Games() {
   }, [width, height]);
 
   const renderStickyHeader = () => (
-    <View style={styles.allGamesTitleView}>
-      <Text style={styles.allGamesTitleText}>
+    <View style={styles.headerTitleView}>
+      <Text style={styles.headerTitleText}>
         All Games
       </Text>
       <View style={styles.sortButtonGroup}>
-        <TouchableOpacity>
+        <TouchableOpacity style={styles.sortButton}>
           <MCIcons name="package-variant-closed" size={25} color="black" />
         </TouchableOpacity>
-        <View style={{ width: 10 }} />
-        <TouchableOpacity>
+        <TouchableOpacity style={styles.sortButton}>
           <MCIcons name="sort-variant" size={25} color="black" />
         </TouchableOpacity>
       </View>
@@ -95,24 +97,34 @@ export default function Games() {
       {
         showSearchBar && (
           <SearchBar
-            scrollToHeader={() => {
-              sectionRef.current.scrollToLocation({
-                sectionIndex: 0,
-                itemIndex: 0,
-              });
-            }}
+            scrollPosition={sectionRef}
+            setShowSearchBar={setShowSearchBar}
+            setShowFAB={setShowFAB}
           />
         )
       }
+      <FAB
+        buttonColor="dodgerblue"
+        iconTextColor="white"
+        onClickAction={() => {
+          setShowSearchBar(true);
+          setShowFAB(false);
+        }}
+        visible={showFAB}
+        iconTextComponent={
+          <ADIcons name="search1" />
+        }
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: '#eee',
   },
-  allGamesTitleView: {
+  headerTitleView: {
     width: '100%',
     height: 50,
     flexDirection: 'row',
@@ -122,7 +134,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
     backgroundColor: 'white',
   },
-  allGamesTitleText: {
+  headerTitleText: {
     fontFamily: 'BarlowCondensed-Medium',
     fontSize: 25,
     margin: 0,
@@ -131,6 +143,12 @@ const styles = StyleSheet.create({
   sortButtonGroup: {
     flexDirection: 'row',
     flexWrap: 'nowrap',
+    alignItems: 'center',
+  },
+  sortButton: {
+    width: 36,
+    height: 50,
+    justifyContent: 'center',
     alignItems: 'center',
   },
 });
