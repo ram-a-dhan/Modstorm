@@ -25,9 +25,9 @@ export default function Games() {
   const [showFAB, setShowFAB] = useState(true);
   
   const inputRef = useRef(null);
-  const sectionRef = useRef(null);
+  const scrollRef = useRef(null);
 
-  useScrollToTop(sectionRef);
+  useScrollToTop(scrollRef);
 
   useEffect(() => {
     setNumColumns(Math.round(width / 150));
@@ -69,6 +69,15 @@ export default function Games() {
     )
   };
 
+  const renderEmptySpace = () => (
+    <View
+      style={{
+        width: '100%',
+        height: (width / numColumns) / 0.8,
+      }}
+    />
+  );
+
   return (
     <View style={styles.container}>
       <SectionList
@@ -84,20 +93,13 @@ export default function Games() {
         sections={[{ data: listOfGames }]}
         keyExtractor={item => item.id.toString()}
         renderItem={renderGameCards}
-        ListFooterComponent={() => (
-          <View
-            style={{
-              width: '100%',
-              height: (width / numColumns) / 0.8,
-            }}
-          />
-        )}
-        ref={sectionRef}
+        ListFooterComponent={renderEmptySpace}
+        ref={scrollRef}
       />
       {
         showSearchBar && (
           <SearchBar
-            scrollPosition={sectionRef}
+            scrollPosition={scrollRef}
             setShowSearchBar={setShowSearchBar}
             setShowFAB={setShowFAB}
             inputRef={inputRef}
