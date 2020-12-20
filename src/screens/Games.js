@@ -5,6 +5,7 @@ import {
   StyleSheet,
   useWindowDimensions,
   SectionList,
+  FlatList,
 } from 'react-native';
 import { useScrollToTop } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -48,29 +49,23 @@ export default function Games() {
   );
 
   const renderGameCards = ({ section, index }) => {
-    if (index % numColumns !== 0) return null;
-
-    const items = [];
-
-    for (let i = index; i < index + numColumns; i++) {
-      if (i >= section.data.length) {
-        break;
-      }
-      items.push(
-        <GameCard
-          key={section.data[i].id.toString()}
-          game={section.data[i]}
-          width={width}
-          numColumns={numColumns}
-        />
-      );
-    }
+    if (index !== 0) return null;
 
     return (
-      <View style={{ flexDirection: 'row' }}>
-        {items}
-      </View>
-    );
+      <FlatList
+        data={section.data}
+        keyExtractor={item => item.id.toString()}
+        renderItem={({ item }) => (
+          <GameCard
+            game={item}
+            width={width}
+            numColumns={numColumns}
+          />
+        )}
+        numColumns={numColumns}
+        key={numColumns}
+      />
+    )
   };
 
   return (
