@@ -24,6 +24,7 @@ export default function Games() {
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [showFAB, setShowFAB] = useState(true);
   
+  const inputRef = useRef(null);
   const sectionRef = useRef(null);
 
   useScrollToTop(sectionRef);
@@ -99,6 +100,7 @@ export default function Games() {
             scrollPosition={sectionRef}
             setShowSearchBar={setShowSearchBar}
             setShowFAB={setShowFAB}
+            inputRef={inputRef}
           />
         )
       }
@@ -108,6 +110,9 @@ export default function Games() {
         onClickAction={() => {
           setShowSearchBar(true);
           setShowFAB(false);
+          setTimeout(() => {
+            inputRef.current.focus();
+          }, 100);
         }}
         visible={showFAB}
         iconTextComponent={

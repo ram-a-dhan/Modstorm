@@ -8,7 +8,7 @@ import {
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import ADIcons from 'react-native-vector-icons/AntDesign';
 
-export default function SearchBar({ scrollPosition, setShowSearchBar, setShowFAB }) {
+export default function SearchBar({ scrollPosition, setShowSearchBar, setShowFAB, inputRef }) {
   const { width } = useWindowDimensions();
 
   return (
@@ -23,6 +23,7 @@ export default function SearchBar({ scrollPosition, setShowSearchBar, setShowFAB
             itemIndex: 0,
           });
         }}
+        ref={inputRef}
       />
       <View style={styles.searchBarButtonGroup}>
         <TouchableOpacity
