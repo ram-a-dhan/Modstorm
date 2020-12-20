@@ -6,6 +6,7 @@ import {
   useWindowDimensions,
   SectionList,
 } from 'react-native';
+import { useScrollToTop } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import FAB from 'react-native-fab';
 import MCIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -21,7 +22,10 @@ export default function Games() {
   const [numColumns, setNumColumns] = useState(3);
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [showFAB, setShowFAB] = useState(true);
+  
   const sectionRef = useRef(null);
+
+  useScrollToTop(sectionRef);
 
   useEffect(() => {
     setNumColumns(Math.round(width / 150));
