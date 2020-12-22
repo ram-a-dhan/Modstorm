@@ -85,7 +85,6 @@ export default function Games() {
           <GameBanner
             selectedGame={listOfGames[0]}
             height={height}
-            searchBarHeight={0}
           />
         )}
         renderSectionHeader={renderStickyHeader}
