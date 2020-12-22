@@ -6,6 +6,7 @@ import {
   useWindowDimensions,
   SectionList,
   FlatList,
+  Animated,
 } from 'react-native';
 import { useScrollToTop } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -28,6 +29,20 @@ export default function Games() {
   const scrollRef = useRef(null);
 
   useScrollToTop(scrollRef);
+
+  const animatedScroll = new Animated.Value(0);
+
+  const scrollParallax = animatedScroll.interpolate({
+    inputRange: [0, height * 0.5],
+    outputRange: [0, -(height * 0.5) / 2],
+    extrapolate: 'clamp',
+  });
+
+  const scrollFade = animatedScroll.interpolate({
+    inputRange: [height * 0.25, height * 0.5],
+    outputRange: [0, 1],
+    extrapolate: 'clamp',
+  });
 
   useEffect(() => {
     setNumColumns(Math.round(width / 150));
@@ -53,19 +68,21 @@ export default function Games() {
     if (index !== 0) return null;
 
     return (
-      <FlatList
-        data={section.data}
-        keyExtractor={item => item.id.toString()}
-        renderItem={({ item }) => (
-          <GameCard
-            game={item}
-            width={width}
-            numColumns={numColumns}
-          />
-        )}
-        numColumns={numColumns}
-        key={numColumns}
-      />
+      <View style={{ backgroundColor: '#eee' }}>
+        <FlatList
+          data={section.data}
+          keyExtractor={item => item.id.toString()}
+          renderItem={({ item }) => (
+            <GameCard
+              game={item}
+              width={width}
+              numColumns={numColumns}
+            />
+          )}
+          numColumns={numColumns}
+          key={numColumns}
+        />
+      </View>
     )
   };
 
@@ -73,18 +90,37 @@ export default function Games() {
     <View
       style={{
         width: '100%',
-        height: (width / numColumns) / 0.8,
+        height: 100,
+        backgroundColor: '#eee',
       }}
     />
   );
 
   return (
     <View style={styles.container}>
-      <SectionList
+      <Animated.View
+        style={[styles.bannerContainer, {
+          transform: [{ translateY: scrollParallax }]
+        }]}>
+        <GameBanner
+          selectedGame={listOfGames[0]}
+          height={height}
+        />
+      </Animated.View>
+      <Animated.View
+        style={[styles.bannerContainer, {
+          height: height * 0.5,
+          backgroundColor: 'black',
+          opacity: scrollFade,
+        }]}
+      />
+      <Animated.SectionList
         ListHeaderComponent={() => (
-          <GameBanner
-            selectedGame={listOfGames[0]}
-            height={height}
+          <View
+            style={{
+              width: '100%',
+              height: height * 0.5
+            }}
           />
         )}
         renderSectionHeader={renderStickyHeader}
@@ -94,6 +130,11 @@ export default function Games() {
         renderItem={renderGameCards}
         ListFooterComponent={renderEmptySpace}
         ref={scrollRef}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: animatedScroll }} }],
+          { useNativeDriver: true }
+        )}
+        scrollEventThrottle={8}
       />
       {
         showSearchBar && (
@@ -128,6 +169,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#eee',
+  },
+  bannerContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
   },
   headerTitleView: {
     width: '100%',
