@@ -4,7 +4,6 @@ import {
   Text,
   StyleSheet,
   useWindowDimensions,
-  SectionList,
   FlatList,
   Animated,
 } from 'react-native';
