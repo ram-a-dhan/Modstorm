@@ -7,7 +7,9 @@ import {
 } from 'react-native';
 import colors from '../assets/colors';
 
-export default function GameBanner({ selectedGame, height }) {
+export default function GameBanner(props) {
+  const { selectedGame, height } = props;
+
   return (
     <ImageBackground
       source={{

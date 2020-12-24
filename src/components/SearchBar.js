@@ -4,12 +4,14 @@ import {
   StyleSheet,
   TextInput,
   useWindowDimensions,
+  TouchableNativeFeedback,
 } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import ADIcons from 'react-native-vector-icons/AntDesign';
 import colors from '../assets/colors';
 
-export default function SearchBar({ scrollPosition, setShowSearchBar, setShowFAB, inputRef }) {
+export default function SearchBar(props) {
+  const { scrollPosition, setShowSearchBar, setShowFAB, inputRef } = props;
+
   const { width } = useWindowDimensions();
 
   return (
@@ -27,25 +29,40 @@ export default function SearchBar({ scrollPosition, setShowSearchBar, setShowFAB
         ref={inputRef}
       />
       <View style={styles.searchBarButtonGroup}>
-        <TouchableOpacity
-          style={styles.searchBarButton}
+        <TouchableNativeFeedback
+          background={
+            TouchableNativeFeedback
+              .Ripple(colors.ON_SYSTEM, true, 25)
+          }
         >
-          <ADIcons name="left" size={20} color={colors.ON_SYSTEM} />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.searchBarButton}
+          <View style={styles.searchBarButton}>
+            <ADIcons name="left" size={20} color={colors.ON_SYSTEM} />
+          </View>
+        </TouchableNativeFeedback>
+        <TouchableNativeFeedback
+          background={
+            TouchableNativeFeedback
+              .Ripple(colors.ON_SYSTEM, true, 25)
+          }
         >
-          <ADIcons name="search1" size={20} color={colors.ON_SYSTEM} />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.searchBarButton}
+          <View style={styles.searchBarButton}>
+            <ADIcons name="search1" size={20} color={colors.ON_SYSTEM} />
+          </View>
+        </TouchableNativeFeedback>
+        <TouchableNativeFeedback
+          background={
+            TouchableNativeFeedback
+              .Ripple(colors.ON_SYSTEM, true, 25)
+          }
           onPress={() => {
             setShowSearchBar(false);
             setShowFAB(true);
           }}
         >
-          <ADIcons name="close" size={20} color={colors.ON_SYSTEM} />
-        </TouchableOpacity>
+          <View style={styles.searchBarButton}>
+            <ADIcons name="close" size={20} color={colors.ON_SYSTEM} />
+          </View>
+        </TouchableNativeFeedback>
       </View>
     </View>
   );

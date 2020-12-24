@@ -8,14 +8,15 @@ import {
   Text,
   StyleSheet,
   useWindowDimensions,
+  TouchableNativeFeedback,
   FlatList,
   Animated,
 } from 'react-native';
 import { useScrollToTop } from '@react-navigation/native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import FAB from 'react-native-fab';
 import MCIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ADIcons from 'react-native-vector-icons/AntDesign';
+import FAB from 'react-native-fab';
+import useAnimatedScroll from '../hooks/useAnimatedScroll';
 import GameBanner from '../components/GameBanner';
 import GameCard from '../components/GameCard';
 import SearchBar from '../components/SearchBar';
@@ -34,18 +35,19 @@ export default function Games() {
 
   useScrollToTop(scrollRef);
 
-  const animatedScroll = new Animated.Value(0);
-
-  const scrollParallax = animatedScroll.interpolate({
-    inputRange: [0, height * 0.5],
-    outputRange: [0, -(height * 0.5) / 2],
-    extrapolate: 'clamp',
-  });
-
-  const scrollFade = animatedScroll.interpolate({
-    inputRange: [height * 0.165, height * 0.5],
-    outputRange: [0, 1],
-    extrapolate: 'clamp',
+  const {
+    animatedScroll,
+    scrollParallax,
+    scrollFade,
+  } = useAnimatedScroll({
+    parallax: {
+      inputRange: [0, height * 0.5],
+      outputRange: [0, -(height * 0.5) / 2],
+    },
+    fade: {
+      inputRange: [height * 0.165, height * 0.5],
+      outputRange: [0, 1],
+    },
   });
 
   useEffect(() => {
@@ -58,20 +60,34 @@ export default function Games() {
         All Games
       </Text>
       <View style={styles.sortButtonGroup}>
-        <TouchableOpacity style={styles.sortButton}>
-          <MCIcons
-            name="package-variant-closed"
-            size={25}
-            color={colors.ON_BACKGROUND}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.sortButton}>
-          <MCIcons
-            name="sort-variant"
-            size={25}
-            color={colors.ON_BACKGROUND}
-          />
-        </TouchableOpacity>
+        <TouchableNativeFeedback
+          background={
+            TouchableNativeFeedback
+              .Ripple(colors.ON_BACKGROUND, true, 25)
+          }
+        >
+          <View style={styles.sortButton}>
+            <MCIcons
+              name="package-variant-closed"
+              size={25}
+              color={colors.ON_BACKGROUND}
+            />
+          </View>
+        </TouchableNativeFeedback>
+        <TouchableNativeFeedback
+          background={
+            TouchableNativeFeedback
+              .Ripple(colors.ON_BACKGROUND, true, 25)
+          }
+        >
+          <View style={styles.sortButton}>
+            <MCIcons
+              name="sort-variant"
+              size={25}
+              color={colors.ON_BACKGROUND}
+            />
+          </View>
+        </TouchableNativeFeedback>
       </View>
     </View>
   );
@@ -212,7 +228,7 @@ const styles = StyleSheet.create({
   },
   sortButton: {
     width: 36,
-    height: 50,
+    height: 36,
     justifyContent: 'center',
     alignItems: 'center',
   },

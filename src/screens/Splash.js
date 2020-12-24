@@ -7,7 +7,9 @@ import {
 import * as Animatable from 'react-native-animatable';
 import colors from '../assets/colors';
 
-export default function Splash({ route }) {
+export default function Splash(props) {
+  const { route } = props;
+
   return (
     <View style={styles.container}>
       <View style={styles.flexRow}>
