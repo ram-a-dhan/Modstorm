@@ -1,4 +1,4 @@
-module.exports = [
+export default [
   {
 		"id": 110,
 		"name": "Skyrim",

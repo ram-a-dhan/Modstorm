@@ -1,4 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useRef,
+} from 'react';
 import {
   View,
   Text,
@@ -15,6 +19,7 @@ import ADIcons from 'react-native-vector-icons/AntDesign';
 import GameBanner from '../components/GameBanner';
 import GameCard from '../components/GameCard';
 import SearchBar from '../components/SearchBar';
+import colors from '../assets/colors';
 import listOfGames from '../assets/listOfGames';
 
 export default function Games() {
@@ -38,7 +43,7 @@ export default function Games() {
   });
 
   const scrollFade = animatedScroll.interpolate({
-    inputRange: [height * 0.25, height * 0.5],
+    inputRange: [height * 0.165, height * 0.5],
     outputRange: [0, 1],
     extrapolate: 'clamp',
   });
@@ -54,10 +59,18 @@ export default function Games() {
       </Text>
       <View style={styles.sortButtonGroup}>
         <TouchableOpacity style={styles.sortButton}>
-          <MCIcons name="package-variant-closed" size={25} color="black" />
+          <MCIcons
+            name="package-variant-closed"
+            size={25}
+            color={colors.ON_BACKGROUND}
+          />
         </TouchableOpacity>
         <TouchableOpacity style={styles.sortButton}>
-          <MCIcons name="sort-variant" size={25} color="black" />
+          <MCIcons
+            name="sort-variant"
+            size={25}
+            color={colors.ON_BACKGROUND}
+          />
         </TouchableOpacity>
       </View>
     </View>
@@ -67,7 +80,7 @@ export default function Games() {
     if (index !== 0) return null;
 
     return (
-      <View style={{ backgroundColor: '#eee' }}>
+      <View style={{ backgroundColor: colors.BACKGROUND }}>
         <FlatList
           data={section.data}
           keyExtractor={item => item.id.toString()}
@@ -90,7 +103,7 @@ export default function Games() {
       style={{
         width: '100%',
         height: 100,
-        backgroundColor: '#eee',
+        backgroundColor: colors.BACKGROUND,
       }}
     />
   );
@@ -109,7 +122,7 @@ export default function Games() {
       <Animated.View
         style={[styles.bannerContainer, {
           height: height * 0.5,
-          backgroundColor: 'black',
+          backgroundColor: colors.BACKGROUND,
           opacity: scrollFade,
         }]}
       />
@@ -118,7 +131,7 @@ export default function Games() {
           <View
             style={{
               width: '100%',
-              height: height * 0.5
+              height: height * 0.5,
             }}
           />
         )}
@@ -146,8 +159,8 @@ export default function Games() {
         )
       }
       <FAB
-        buttonColor="dodgerblue"
-        iconTextColor="white"
+        buttonColor={colors.PRIMARY}
+        iconTextColor={colors.ON_PRIMARY}
         onClickAction={() => {
           setShowSearchBar(true);
           setShowFAB(false);
@@ -167,7 +180,7 @@ export default function Games() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#eee',
+    backgroundColor: colors.BACKGROUND,
   },
   bannerContainer: {
     position: 'absolute',
@@ -183,13 +196,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 25,
-    backgroundColor: 'white',
+    backgroundColor: colors.BACKGROUND,
   },
   headerTitleText: {
     fontFamily: 'BarlowCondensed-Medium',
     fontSize: 25,
     margin: 0,
     padding: 0,
+    color: colors.ON_BACKGROUND,
   },
   sortButtonGroup: {
     flexDirection: 'row',

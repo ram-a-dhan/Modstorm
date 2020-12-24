@@ -10,6 +10,7 @@ import ModDetails from './src/screens/ModDetails';
 import ModSearchResults from './src/screens/ModSearchResults';
 import IonIcons from 'react-native-vector-icons/Ionicons';
 import MCIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import colors from './src/assets/colors';
 
 const ModStack = createStackNavigator();
 
@@ -42,16 +43,17 @@ function AppTabScreen() {
       })}
       // initialRouteName="Mods"
       tabBarOptions={{
-        // activeTintColor: '#57a5cc',
-        // inactiveTintColor: 'grey',
+        activeTintColor: colors.PRIMARY,
+        inactiveTintColor: colors.ON_SYSTEM_VARIANT,
         keyboardHidesTabBar: true,
         style: {
           borderTopWidth: 0,
           height: 50,
+          backgroundColor: colors.SYSTEM,
         },
         labelStyle: {
           fontFamily: 'BarlowCondensed-Regular',
-          fontSize: 18
+          fontSize: 18,
         },
         labelPosition: 'beside-icon',
       }}
@@ -60,7 +62,7 @@ function AppTabScreen() {
       <AppTab.Screen
         name="Mods"
         component={ModStackScreen}
-        options={{ unmountOnBlur: true }}
+        // options={{ unmountOnBlur: true }}
       />
     </AppTab.Navigator>
   );
@@ -74,8 +76,7 @@ export default function App() {
   return (
     <KeyboardAvoidingView style={{ flex: 1 }}>
       <StatusBar
-        // translucent
-        backgroundColor="black"
+        backgroundColor={colors.SYSTEM}
         barStyle="light-content"
       />
       <NavigationContainer>

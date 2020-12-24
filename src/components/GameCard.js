@@ -7,12 +7,20 @@ import {
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import MCIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import colors from '../assets/colors';
 
 export default function GameCard({ game, width, numColumns }) {
   return (
     <ImageBackground
-      source={{ uri: `https://staticdelivery.nexusmods.com/Images/games/4_3/tile_${game.id}.jpg` }}
-      style={[styles.gameCardBg, { width: width / numColumns }]}
+      source={{
+        uri: `https://staticdelivery.nexusmods.com`
+          +  `/Images/games/4_3`
+          +  `/tile_${game.id}.jpg`,
+      }}
+      style={[
+        styles.gameCardBg,
+        { width: width / numColumns },
+      ]}
     >
       <View style={styles.gameCardView}>
         <Text style={styles.gameTitle}>
@@ -24,11 +32,19 @@ export default function GameCard({ game, width, numColumns }) {
           </Text>
         </TouchableOpacity>
         <View style={styles.gameStatsView}>
-          <MCIcons name="cube-outline" size={15} color="white" />
+          <MCIcons
+            name="cube-outline"
+            size={15}
+            color={colors.ON_BACKGROUND}
+          />
           <Text style={styles.gameStatsText}>
             {game.mods}
           </Text>
-          <MCIcons name="arrow-down-circle-outline" size={15} color="white" />
+          <MCIcons
+            name="arrow-down-circle-outline"
+            size={15}
+            color={colors.ON_BACKGROUND}
+          />
           <Text style={styles.gameStatsText}>
             {game.downloads}
           </Text>
@@ -45,12 +61,12 @@ const styles = StyleSheet.create({
   },
   gameCardView: {
     padding: 10,
-    backgroundColor: '#00000080',
+    backgroundColor: colors.BACKGROUND + '80',
   },
   gameTitle: {
     fontFamily: 'BarlowCondensed-Medium',
     fontSize: 15,
-    color: 'white',
+    color: colors.ON_BACKGROUND,
     marginBottom: 5,
   },
   selectButton: {
@@ -58,12 +74,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 5,
-    backgroundColor: '#80808080',
+    backgroundColor: colors.PRIMARY,
   },
   selectButtonText: {
     fontFamily: 'BarlowCondensed-Regular',
     fontSize: 15,
-    color: 'white',
+    color: colors.ON_PRIMARY,
   },
   gameStatsView: {
     flexDirection: 'row',
@@ -74,6 +90,6 @@ const styles = StyleSheet.create({
     fontFamily: 'BarlowCondensed-Regular',
     fontSize: 12,
     marginHorizontal: 3,
-    color: 'white',
+    color: colors.ON_BACKGROUND,
   },
 });

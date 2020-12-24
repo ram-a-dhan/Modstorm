@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import ADIcons from 'react-native-vector-icons/AntDesign';
+import colors from '../assets/colors';
 
 export default function SearchBar({ scrollPosition, setShowSearchBar, setShowFAB, inputRef }) {
   const { width } = useWindowDimensions();
@@ -16,7 +17,7 @@ export default function SearchBar({ scrollPosition, setShowSearchBar, setShowFAB
       <TextInput
         style={[styles.searchBarInput, { width: width - 170 }]}
         placeholder="Search Game"
-        placeholderTextColor="darkgrey"
+        placeholderTextColor={colors.ON_SYSTEM_VARIANT}
         onFocus={() => {
           scrollPosition.current.scrollToLocation({
             sectionIndex: 0,
@@ -29,12 +30,12 @@ export default function SearchBar({ scrollPosition, setShowSearchBar, setShowFAB
         <TouchableOpacity
           style={styles.searchBarButton}
         >
-          <ADIcons name="left" size={20} color="white" />
+          <ADIcons name="left" size={20} color={colors.ON_SYSTEM} />
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.searchBarButton}
         >
-          <ADIcons name="search1" size={20} color="white" />
+          <ADIcons name="search1" size={20} color={colors.ON_SYSTEM} />
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.searchBarButton}
@@ -43,7 +44,7 @@ export default function SearchBar({ scrollPosition, setShowSearchBar, setShowFAB
             setShowFAB(true);
           }}
         >
-          <ADIcons name="close" size={20} color="white" />
+          <ADIcons name="close" size={20} color={colors.ON_SYSTEM} />
         </TouchableOpacity>
       </View>
     </View>
@@ -57,13 +58,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'nowrap',
     justifyContent: 'space-between',
-    backgroundColor: 'black',
+    backgroundColor: colors.SYSTEM,
   },
   searchBarInput: {
-    fontSize: 15,
+    fontSize: 16,
     padding: 0,
-    color: 'white',
-    borderBottomColor: 'white',
+    color: colors.ON_SYSTEM,
+    borderBottomColor: colors.ON_SYSTEM_VARIANT,
     borderBottomWidth: 2,
     marginLeft: 15,
     marginRight: 5,
