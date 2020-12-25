@@ -16,6 +16,7 @@ import { useScrollToTop } from '@react-navigation/native';
 import MCIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ADIcons from 'react-native-vector-icons/AntDesign';
 import FAB from 'react-native-fab';
+import LinearGradient from 'react-native-linear-gradient';
 import useAnimatedScroll from '../hooks/useAnimatedScroll';
 import GameBanner from '../components/GameBanner';
 import GameCard from '../components/GameCard';
@@ -114,13 +115,13 @@ export default function Games() {
     )
   };
 
-  const renderEmptySpace = () => (
-    <View
-      style={{
-        width: '100%',
-        height: 100,
-        backgroundColor: colors.BACKGROUND,
-      }}
+  const renderBottomSpace = () => (
+    <LinearGradient
+      colors={[
+        colors.BACKGROUND,
+        colors.SYSTEM,
+      ]}
+      style={styles.bottomSpace}
     />
   );
 
@@ -156,7 +157,7 @@ export default function Games() {
         sections={[{ data: listOfGames }]}
         keyExtractor={item => item.id.toString()}
         renderItem={renderGameCards}
-        ListFooterComponent={renderEmptySpace}
+        ListFooterComponent={renderBottomSpace}
         ref={scrollRef}
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: animatedScroll }} }],
@@ -231,5 +232,9 @@ const styles = StyleSheet.create({
     height: 36,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  bottomSpace: {
+    width: '100%',
+    height: 100,
   },
 });

@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   StyleSheet,
   TextInput,
   useWindowDimensions,
   TouchableNativeFeedback,
+  Keyboard,
 } from 'react-native';
+import * as Animatable from 'react-native-animatable';
 import ADIcons from 'react-native-vector-icons/AntDesign';
 import colors from '../assets/colors';
 
@@ -14,8 +16,18 @@ export default function SearchBar(props) {
 
   const { width } = useWindowDimensions();
 
+  const [searchBarAnimation, setSearchBarAnimation] = useState('slideInUp');
+
   return (
-    <View style={styles.searchBarView}>
+    <Animatable.View
+      style={styles.searchBarView}
+      animation={searchBarAnimation}
+      onAnimationEnd={() => {
+        if (searchBarAnimation === 'slideOutDown') {
+          setShowSearchBar(false);
+        }
+      }}
+    >
       <TextInput
         style={[styles.searchBarInput, { width: width - 170 }]}
         placeholder="Search Game"
@@ -55,7 +67,8 @@ export default function SearchBar(props) {
               .Ripple(colors.ON_SYSTEM, true, 25)
           }
           onPress={() => {
-            setShowSearchBar(false);
+            Keyboard.dismiss();
+            setSearchBarAnimation('slideOutDown');
             setShowFAB(true);
           }}
         >
@@ -64,12 +77,14 @@ export default function SearchBar(props) {
           </View>
         </TouchableNativeFeedback>
       </View>
-    </View>
+    </Animatable.View>
   );
 }
 
 const styles = StyleSheet.create({
   searchBarView: {
+    position: 'absolute',
+    bottom: 0,
     width: '100%',
     height: 50,
     flexDirection: 'row',
@@ -85,7 +100,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     marginLeft: 15,
     marginRight: 5,
-    marginVertical: 7
+    marginVertical: 7,
   },
   searchBarButtonGroup: {
     flexDirection: 'row',

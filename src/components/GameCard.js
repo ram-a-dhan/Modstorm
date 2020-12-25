@@ -8,7 +8,9 @@ import {
   ImageBackground,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
+import LinearGradient from 'react-native-linear-gradient';
 import MCIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import approx from 'approximate-number';
 import colors from '../assets/colors';
 
 export default function GameCard(props) {
@@ -51,7 +53,7 @@ export default function GameCard(props) {
         color={colors.ON_BACKGROUND}
       />
       <Text style={styles.gameStatsText}>
-        {game.mods}
+        {approx(game.mods)}
       </Text>
       <MCIcons
         name="arrow-down-circle-outline"
@@ -59,7 +61,7 @@ export default function GameCard(props) {
         color={colors.ON_BACKGROUND}
       />
       <Text style={styles.gameStatsText}>
-        {game.downloads}
+        {approx(game.downloads)}
       </Text>
     </Animatable.View>
   );
@@ -104,7 +106,15 @@ export default function GameCard(props) {
         ]}
       >
         <TouchableWithoutFeedback onPress={handlePressGameCard}>
-          <View style={styles.gameCardView}>
+          <LinearGradient
+            colors={[
+              colors.BACKGROUND + '00',
+              colors.BACKGROUND + 'AA',
+              colors.BACKGROUND + 'FF',
+            ]}
+            locations={[0, 0.3, 0.9]}
+            style={styles.gameCardView}
+          >
             <Text style={styles.gameTitle}>
               {game.name}
             </Text>
@@ -115,7 +125,7 @@ export default function GameCard(props) {
                 <RenderGameStats />
               )
             }
-          </View>
+          </LinearGradient>
         </TouchableWithoutFeedback>
       </ImageBackground>
     </TouchableWithoutFeedback>
@@ -129,7 +139,7 @@ const styles = StyleSheet.create({
   },
   gameCardView: {
     padding: 10,
-    backgroundColor: colors.BACKGROUND + '80',
+    marginBottom: -1,
   },
   gameTitle: {
     fontFamily: 'BarlowCondensed-Medium',

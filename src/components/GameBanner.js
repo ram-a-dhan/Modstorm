@@ -1,10 +1,10 @@
 import React from 'react';
 import {
-  View,
   Text,
   StyleSheet,
   ImageBackground,
 } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import colors from '../assets/colors';
 
 export default function GameBanner(props) {
@@ -22,14 +22,22 @@ export default function GameBanner(props) {
         { height: height * 0.5 },
       ]}
     >
-      <View style={styles.gameBannerView}>
+      <LinearGradient
+        colors={[
+          colors.BACKGROUND + '00',
+          colors.BACKGROUND + 'AA',
+          colors.BACKGROUND + 'FF',
+        ]}
+        locations={[0, 0.3, 0.9]}
+        style={styles.gameBannerView}
+      >
         <Text style={styles.gameBannerTopText}>
           Selected Game:
         </Text>
         <Text style={styles.gameBannerBottomText}>
           {selectedGame.name.toUpperCase()}
         </Text>
-      </View>
+      </LinearGradient>
     </ImageBackground>
   );
 }
@@ -43,7 +51,6 @@ const styles = StyleSheet.create({
   gameBannerView: {
     width: '100%',
     padding: 25,
-    backgroundColor: colors.BACKGROUND + '80',
   },
   gameBannerTopText: {
     fontFamily: 'BarlowCondensed-Regular',
