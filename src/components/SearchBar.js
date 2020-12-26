@@ -5,18 +5,27 @@ import {
   TextInput,
   useWindowDimensions,
   TouchableNativeFeedback,
-  Keyboard,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import ADIcons from 'react-native-vector-icons/AntDesign';
 import colors from '../assets/colors';
 
 export default function SearchBar(props) {
-  const { scrollPosition, setShowSearchBar, setShowFAB, inputRef } = props;
+  const { setShowSearchBar, setShowFAB, scrollRef, inputRef } = props;
 
   const { width } = useWindowDimensions();
 
   const [searchBarAnimation, setSearchBarAnimation] = useState('slideInUp');
+
+  const rippleEffect =
+    TouchableNativeFeedback
+      .Ripple(colors.ON_SYSTEM, true, 25);
+
+  const handleClose = () => {
+    inputRef.current.blur();
+    setSearchBarAnimation('slideOutDown');
+    setShowFAB(true);
+  };
 
   return (
     <Animatable.View
@@ -27,53 +36,58 @@ export default function SearchBar(props) {
           setShowSearchBar(false);
         }
       }}
+      useNativeDriver
     >
       <TextInput
-        style={[styles.searchBarInput, { width: width - 170 }]}
+        style={[
+          styles.searchBarInput,
+          { width: width - 170 },
+        ]}
+        ref={inputRef}
         placeholder="Search Game"
         placeholderTextColor={colors.ON_SYSTEM_VARIANT}
         onFocus={() => {
-          scrollPosition.current.scrollToLocation({
+          scrollRef.current.scrollToLocation({
             sectionIndex: 0,
             itemIndex: 0,
           });
         }}
-        ref={inputRef}
       />
       <View style={styles.searchBarButtonGroup}>
         <TouchableNativeFeedback
-          background={
-            TouchableNativeFeedback
-              .Ripple(colors.ON_SYSTEM, true, 25)
-          }
+          background={rippleEffect}
+          onPress={() => {}}
         >
           <View style={styles.searchBarButton}>
-            <ADIcons name="left" size={20} color={colors.ON_SYSTEM} />
+            <ADIcons
+              name="left"
+              size={20}
+              color={colors.ON_SYSTEM}
+            />
           </View>
         </TouchableNativeFeedback>
         <TouchableNativeFeedback
-          background={
-            TouchableNativeFeedback
-              .Ripple(colors.ON_SYSTEM, true, 25)
-          }
+          background={rippleEffect}
+          onPress={() => {}}
         >
           <View style={styles.searchBarButton}>
-            <ADIcons name="search1" size={20} color={colors.ON_SYSTEM} />
+            <ADIcons
+              name="search1"
+              size={20}
+              color={colors.ON_SYSTEM}
+            />
           </View>
         </TouchableNativeFeedback>
         <TouchableNativeFeedback
-          background={
-            TouchableNativeFeedback
-              .Ripple(colors.ON_SYSTEM, true, 25)
-          }
-          onPress={() => {
-            Keyboard.dismiss();
-            setSearchBarAnimation('slideOutDown');
-            setShowFAB(true);
-          }}
+          background={rippleEffect}
+          onPress={handleClose}
         >
           <View style={styles.searchBarButton}>
-            <ADIcons name="close" size={20} color={colors.ON_SYSTEM} />
+            <ADIcons
+              name="close"
+              size={20}
+              color={colors.ON_SYSTEM}
+            />
           </View>
         </TouchableNativeFeedback>
       </View>

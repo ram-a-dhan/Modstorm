@@ -17,48 +17,65 @@ const ModStack = createStackNavigator();
 function ModStackScreen() {
   return (
     <ModStack.Navigator headerMode="none">
-      <ModStack.Screen name="Mods" component={Mods} />
-      <ModStack.Screen name="ModDetails" component={ModDetails} />
-      <ModStack.Screen name="ModSearchResults" component={ModSearchResults} />
+      <ModStack.Screen
+        name="Mods"
+        component={Mods}
+      />
+      <ModStack.Screen
+        name="ModDetails"
+        component={ModDetails}
+      />
+      <ModStack.Screen
+        name="ModSearchResults"
+        component={ModSearchResults}
+      />
     </ModStack.Navigator>
   );
 }
 
 const AppTab = createBottomTabNavigator();
 
+const appTabScreenOptions = ({ route }) => ({
+  tabBarIcon: ({ focused, size, color }) => {
+    let iconName;
+    if (route.name === 'Games') {
+      iconName = focused ? 'game-controller' : 'game-controller-outline';
+      return <IonIcons name={iconName} size={size} color={color} />
+    } else if (route.name === 'Mods') {
+      iconName = focused ? 'cube' : 'cube-outline';
+      return <MCIcons name={iconName} size={size} color={color} />
+    }
+  },
+});
+
+const appTabBarOptions = {
+  activeTintColor: colors.PRIMARY,
+  inactiveTintColor: colors.ON_SYSTEM_VARIANT,
+  keyboardHidesTabBar: true,
+  style: {
+    borderTopWidth: 0,
+    height: 50,
+    backgroundColor: colors.SYSTEM,
+  },
+  labelStyle: {
+    fontFamily: 'BarlowCondensed-Regular',
+    fontSize: 18,
+  },
+  labelPosition: 'beside-icon',
+};
+
 function AppTabScreen() {
   return (
     <AppTab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, size, color }) => {
-          let iconName;
-          if (route.name === 'Games') {
-            iconName = focused ? 'game-controller' : 'game-controller-outline';
-            return <IonIcons name={iconName} size={size} color={color} />
-          } else if (route.name === 'Mods') {
-            iconName = focused ? 'cube' : 'cube-outline';
-            return <MCIcons name={iconName} size={size} color={color} />
-          }
-        },
-      })}
-      // initialRouteName="Mods"
-      tabBarOptions={{
-        activeTintColor: colors.PRIMARY,
-        inactiveTintColor: colors.ON_SYSTEM_VARIANT,
-        keyboardHidesTabBar: true,
-        style: {
-          borderTopWidth: 0,
-          height: 50,
-          backgroundColor: colors.SYSTEM,
-        },
-        labelStyle: {
-          fontFamily: 'BarlowCondensed-Regular',
-          fontSize: 18,
-        },
-        labelPosition: 'beside-icon',
-      }}
+      screenOptions={appTabScreenOptions}
+      tabBarOptions={appTabBarOptions}
+      // initialRouteName={"Mods"}
     >
-      <AppTab.Screen name="Games" component={Games} />
+      <AppTab.Screen
+        name="Games"
+        component={Games}
+        // options={{ unmountOnBlur: true }}
+        />
       <AppTab.Screen
         name="Mods"
         component={ModStackScreen}
@@ -82,12 +99,18 @@ export default function App() {
       <NavigationContainer>
         <InitStack.Navigator headerMode="none">
           {
-            showSplashScreen
-            ? <InitStack.Screen name="Splash"
+            showSplashScreen ? (
+              <InitStack.Screen
+                name="Splash"
                 component={Splash}
                 initialParams={{ setShowSplashScreen }}
               />
-            : <InitStack.Screen name="App" component={AppTabScreen} />
+            ) : (
+              <InitStack.Screen
+                name="App"
+                component={AppTabScreen}
+              />
+            )
           }
         </InitStack.Navigator>
       </NavigationContainer>

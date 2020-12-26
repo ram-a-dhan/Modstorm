@@ -30,7 +30,11 @@ export default function Games() {
   const [numColumns, setNumColumns] = useState(3);
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [showFAB, setShowFAB] = useState(true);
-  
+
+  useEffect(() => {
+    setNumColumns(Math.round(width / 150));
+  }, [width, height]);
+
   const inputRef = useRef(null);
   const scrollRef = useRef(null);
 
@@ -51,9 +55,9 @@ export default function Games() {
     },
   });
 
-  useEffect(() => {
-    setNumColumns(Math.round(width / 150));
-  }, [width, height]);
+  const rippleEffect =
+    TouchableNativeFeedback
+      .Ripple(colors.ON_BACKGROUND, true, 25);
 
   const renderStickyHeader = () => (
     <View style={styles.headerTitleView}>
@@ -62,10 +66,8 @@ export default function Games() {
       </Text>
       <View style={styles.sortButtonGroup}>
         <TouchableNativeFeedback
-          background={
-            TouchableNativeFeedback
-              .Ripple(colors.ON_BACKGROUND, true, 25)
-          }
+          background={rippleEffect}
+          onPress={() => {}}
         >
           <View style={styles.sortButton}>
             <MCIcons
@@ -76,10 +78,8 @@ export default function Games() {
           </View>
         </TouchableNativeFeedback>
         <TouchableNativeFeedback
-          background={
-            TouchableNativeFeedback
-              .Ripple(colors.ON_BACKGROUND, true, 25)
-          }
+          background={rippleEffect}
+          onPress={() => {}}
         >
           <View style={styles.sortButton}>
             <MCIcons
@@ -117,33 +117,39 @@ export default function Games() {
 
   const renderBottomSpace = () => (
     <LinearGradient
+      style={styles.bottomSpace}
       colors={[
         colors.BACKGROUND,
         colors.SYSTEM,
       ]}
-      style={styles.bottomSpace}
     />
   );
 
   return (
     <View style={styles.container}>
       <Animated.View
-        style={[styles.bannerContainer, {
-          transform: [{ translateY: scrollParallax }]
-        }]}>
+        style={[
+          styles.bannerContainer,
+          { transform: [{ translateY: scrollParallax }] },
+        ]}
+      >
         <GameBanner
           selectedGame={listOfGames[0]}
           height={height}
         />
       </Animated.View>
       <Animated.View
-        style={[styles.bannerContainer, {
-          height: height * 0.5,
-          backgroundColor: colors.BACKGROUND,
-          opacity: scrollFade,
-        }]}
+        style={[
+          styles.bannerContainer,
+          {
+            height: height * 0.5,
+            backgroundColor: colors.BACKGROUND,
+            opacity: scrollFade,
+          },
+        ]}
       />
       <Animated.SectionList
+        ref={scrollRef}
         ListHeaderComponent={() => (
           <View
             style={{
@@ -158,7 +164,6 @@ export default function Games() {
         keyExtractor={item => item.id.toString()}
         renderItem={renderGameCards}
         ListFooterComponent={renderBottomSpace}
-        ref={scrollRef}
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: animatedScroll }} }],
           { useNativeDriver: true }
@@ -168,9 +173,9 @@ export default function Games() {
       {
         showSearchBar && (
           <SearchBar
-            scrollPosition={scrollRef}
             setShowSearchBar={setShowSearchBar}
             setShowFAB={setShowFAB}
+            scrollRef={scrollRef}
             inputRef={inputRef}
           />
         )

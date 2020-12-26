@@ -13,21 +13,27 @@ export default function Splash(props) {
   return (
     <View style={styles.container}>
       <View style={styles.flexRow}>
-        <Animatable.View animation="fadeIn" delay={500}>
+        <Animatable.View
+          animation="fadeIn"
+          delay={500}
+          useNativeDriver
+        >
           <Animatable.Image
-            source={require('../assets/images/modstorm-logo.png')}
             style={styles.logo}
+            source={require('../assets/images/modstorm-logo.png')}
             animation="rotate"
             direction="reverse"
             iterationCount={3}
             onAnimationEnd={() => {
               route.params.setShowSplashScreen(false)
             }}
+            useNativeDriver
           />
         </Animatable.View>
         <Animatable.View
-          animation="fadeInRight"
           style={styles.flexRow}
+          animation="fadeInRight"
+          useNativeDriver
         >
           <Text style={styles.type1}>
             MOD

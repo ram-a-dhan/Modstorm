@@ -12,24 +12,24 @@ export default function GameBanner(props) {
 
   return (
     <ImageBackground
+      style={[
+        styles.gameBannerBackground,
+        { height: height * 0.5 },
+      ]}
       source={{
         uri: `https://staticdelivery.nexusmods.com`
           +  `/Images/games/4_3`
           +  `/tile_${selectedGame.id}.jpg`,
       }}
-      style={[
-        styles.gameBannerBackground,
-        { height: height * 0.5 },
-      ]}
     >
       <LinearGradient
+        style={styles.gameBannerView}
         colors={[
           colors.BACKGROUND + '00',
           colors.BACKGROUND + 'AA',
           colors.BACKGROUND + 'FF',
         ]}
         locations={[0, 0.3, 0.9]}
-        style={styles.gameBannerView}
       >
         <Text style={styles.gameBannerTopText}>
           Selected Game:

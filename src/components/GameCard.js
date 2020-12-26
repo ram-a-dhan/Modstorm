@@ -20,6 +20,10 @@ export default function GameCard(props) {
   const [selectButtonAnimation, setSelectButtonAnimation] = useState('slideInUp');
   const [gameStatsAnimation, setGameStatsAnimation] = useState('');
 
+  const rippleEffect =
+    TouchableNativeFeedback
+      .Ripple(colors.ON_PRIMARY);
+
   const handlePressGameCard = () => {
     setGameStatsAnimation('slideOutDown');
   };
@@ -46,6 +50,7 @@ export default function GameCard(props) {
           setGameStatsAnimation('');
         }
       }}
+      useNativeDriver
     >
       <MCIcons
         name="cube-outline"
@@ -76,12 +81,11 @@ export default function GameCard(props) {
           setShowSelectButton(false);
         }
       }}
+      useNativeDriver
     >
       <TouchableNativeFeedback
-        background={
-          TouchableNativeFeedback
-            .Ripple(colors.ON_PRIMARY)
-        }
+        background={rippleEffect}
+        onPress={() => {}}
       >
         <View style={styles.selectButton}>
           <Text style={styles.selectButtonText}>
@@ -95,25 +99,25 @@ export default function GameCard(props) {
   return (
     <TouchableWithoutFeedback onPress={handlePressGameCard}>
       <ImageBackground
+        style={[
+          styles.gameCardBackground,
+          { width: width / numColumns },
+        ]}
         source={{
           uri: `https://staticdelivery.nexusmods.com`
             +  `/Images/games/4_3`
             +  `/tile_${game.id}.jpg`,
         }}
-        style={[
-          styles.gameCardBackground,
-          { width: width / numColumns },
-        ]}
       >
         <TouchableWithoutFeedback onPress={handlePressGameCard}>
           <LinearGradient
+            style={styles.gameCardView}
             colors={[
               colors.BACKGROUND + '00',
               colors.BACKGROUND + 'AA',
               colors.BACKGROUND + 'FF',
             ]}
             locations={[0, 0.3, 0.9]}
-            style={styles.gameCardView}
           >
             <Text style={styles.gameTitle}>
               {game.name}
