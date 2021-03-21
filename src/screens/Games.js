@@ -27,13 +27,14 @@ import listOfGames from '../assets/listOfGames';
 export default function Games() {
   const { width, height } = useWindowDimensions();
   
+  const [cardWidth, setCardWidth] = useState(160);
   const [numColumns, setNumColumns] = useState(3);
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [showFAB, setShowFAB] = useState(true);
 
   useEffect(() => {
-    setNumColumns(Math.round(width / 150));
-  }, [width, height]);
+    setNumColumns(Math.round(width / cardWidth));
+  }, [width, height, cardWidth]);
 
   const inputRef = useRef(null);
   const scrollRef = useRef(null);
@@ -62,9 +63,21 @@ export default function Games() {
   const renderStickyHeader = () => (
     <View style={styles.headerTitleView}>
       <Text style={styles.headerTitleText}>
-        All Games
+        ALL GAMES
       </Text>
       <View style={styles.sortButtonGroup}>
+        <TouchableNativeFeedback
+          background={rippleEffect}
+          onPress={() => {}}
+        >
+          <View style={styles.sortButton}>
+            <MCIcons
+              name="fullscreen"
+              size={25}
+              color={colors.ON_BACKGROUND}
+            />
+          </View>
+        </TouchableNativeFeedback>
         <TouchableNativeFeedback
           background={rippleEffect}
           onPress={() => {}}
@@ -105,6 +118,7 @@ export default function Games() {
             <GameCard
               game={item}
               width={width}
+              cardWidth={cardWidth}
               numColumns={numColumns}
             />
           )}
@@ -168,7 +182,7 @@ export default function Games() {
           [{ nativeEvent: { contentOffset: { y: animatedScroll }} }],
           { useNativeDriver: true }
         )}
-        scrollEventThrottle={8}
+        scrollEventThrottle={128}
       />
       {
         showSearchBar && (
@@ -222,7 +236,7 @@ const styles = StyleSheet.create({
   },
   headerTitleText: {
     fontFamily: 'BarlowCondensed-Medium',
-    fontSize: 25,
+    fontSize: 24,
     margin: 0,
     padding: 0,
     color: colors.ON_BACKGROUND,

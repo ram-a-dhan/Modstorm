@@ -24,9 +24,7 @@ export default function Splash(props) {
             animation="rotate"
             direction="reverse"
             iterationCount={3}
-            onAnimationEnd={() => {
-              route.params.setShowSplashScreen(false)
-            }}
+            onAnimationEnd={() => route.params.setShowSplashScreen(false)}
             useNativeDriver
           />
         </Animatable.View>

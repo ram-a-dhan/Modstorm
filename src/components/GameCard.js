@@ -14,7 +14,7 @@ import approx from 'approximate-number';
 import colors from '../assets/colors';
 
 export default function GameCard(props) {
-  const { game, width, numColumns } = props;
+  const { game, width, cardWidth, numColumns } = props;
 
   const [showSelectButton, setShowSelectButton] = useState(false);
   const [selectButtonAnimation, setSelectButtonAnimation] = useState('slideInUp');
@@ -40,7 +40,7 @@ export default function GameCard(props) {
 
   const RenderGameStats = () => (
     <Animatable.View
-      style={styles.gameStatsView}
+      style={[styles.gameStatsView, { height: cardWidth / 10 }]}
       animation={gameStatsAnimation}
       duration={250}
       onAnimationEnd={() => {
@@ -54,18 +54,18 @@ export default function GameCard(props) {
     >
       <MCIcons
         name="cube-outline"
-        size={15}
+        size={(cardWidth / 10) - 2}
         color={colors.ON_BACKGROUND}
       />
-      <Text style={styles.gameStatsText}>
+      <Text style={[styles.gameStatsText, { fontSize: (cardWidth / 10) - 4 }]}>
         {approx(game.mods)}
       </Text>
       <MCIcons
         name="arrow-down-circle-outline"
-        size={15}
+        size={(cardWidth / 10) - 2}
         color={colors.ON_BACKGROUND}
       />
-      <Text style={styles.gameStatsText}>
+      <Text style={[styles.gameStatsText, { fontSize: (cardWidth / 10) - 4 }]}>
         {approx(game.downloads)}
       </Text>
     </Animatable.View>
@@ -87,8 +87,8 @@ export default function GameCard(props) {
         background={rippleEffect}
         onPress={() => {}}
       >
-        <View style={styles.selectButton}>
-          <Text style={styles.selectButtonText}>
+        <View style={[styles.selectButton, { height: cardWidth / 10 }]}>
+          <Text style={[styles.selectButtonText, { fontSize: (cardWidth / 10) - 2 }]}>
             SELECT
           </Text>
         </View>
@@ -119,7 +119,7 @@ export default function GameCard(props) {
             ]}
             locations={[0, 0.3, 0.9]}
           >
-            <Text style={styles.gameTitle}>
+            <Text style={[styles.gameTitle, { fontSize: cardWidth / 10 }]}>
               {game.name}
             </Text>
             {
@@ -147,32 +147,32 @@ const styles = StyleSheet.create({
   },
   gameTitle: {
     fontFamily: 'BarlowCondensed-Medium',
-    fontSize: 16,
+    // fontSize: 16,
     color: colors.ON_BACKGROUND,
     marginBottom: 5,
   },
   selectButton: {
     width: '100%',
-    height: 16,
+    // height: 16,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: colors.PRIMARY,
   },
   selectButtonText: {
     fontFamily: 'BarlowCondensed-Regular',
-    fontSize: 14,
+    // fontSize: 14,
     marginTop: -2,
     color: colors.ON_PRIMARY,
   },
   gameStatsView: {
-    height: 16,
+    // height: 16,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
   gameStatsText: {
     fontFamily: 'BarlowCondensed-Regular',
-    fontSize: 12,
+    // fontSize: 12,
     marginHorizontal: 3,
     color: colors.ON_BACKGROUND,
   },
